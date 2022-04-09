@@ -13,7 +13,7 @@ def main():
     delivery('B', 3)
     delivery('C', 4)
 
-
+ 
 if __name__ == '__main__':
     start = time.time()
     main()
