@@ -1,0 +1,4 @@
+# vscode 패키지
+.vscode/
+# 가상환경 정보
+venv/
