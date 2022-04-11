@@ -1,7 +1,7 @@
 import time
 import os
 import threading
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 
 
 nums = [30] * 100
@@ -20,11 +20,11 @@ def cpu_bound_func(num):
 
 
 def main():
-    executor = ThreadPoolExecutor(max_workers=10)
+    executor = ProcessPoolExecutor(max_workers=10)
     results = list(executor.map(cpu_bound_func, nums))
-    print(results)      # 44초 # 27초
+    print(results)      # 44초      # 13초
     # for num in nums:
-    #     cpu_bound_func(num)     # 26초
+    #     cpu_bound_func(num)     # 26초  
 
 
 if __name__ == "__main__":
