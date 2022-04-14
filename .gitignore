@@ -3,4 +3,4 @@
 # 가상환경 정보
 venv/
 
-.drf_project/secrets.json
+secrets.json
