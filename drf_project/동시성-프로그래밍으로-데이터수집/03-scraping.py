@@ -9,7 +9,13 @@ import certifi
 async def fetch(session, url):
     async with session.get(url) as response:
         html = await response.text()
-        print(html)
+        soup = BeautifulSoup(html, 'html.parser')
+        cont_thumb = soup.find_all('div', 'cont_thumb')  # 해당 모든 요소들이 리스트 내에 담김
+        for cont in cont_thumb:
+            title = cont.find("p", "txt_thumb")
+            # 타이틀이 반드시 있다고 가정(예외처리)
+            if title is not None:
+                print(title.text)
 
 
 async def main():
