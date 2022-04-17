@@ -1,25 +1,26 @@
-from typing import Optional
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
-from fastapi import FastAPI
+from pathlib import Path
+# 절대 경로 지정 (app) 디렉토리 파일 명시
+BASE_DIR = Path(__file__).resolve().parent
 
-# 싱글톤 패턴
 app = FastAPI()
 
-# 데코레이터 문법
+templates = Jinja2Templates(directory=BASE_DIR / "templates")
+
+# root 라우터
 
 
-@app.get("/")
-def read_root():
-    print("hello world!")
-    return {"Hello": "World"}
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("./index.html",
+                                      {"request": request, "title": "콜렉터 북북이"})
 
 
-@app.get("/hello")
-def read_fastapi_hello():
-    print("hello world!")
-    return {"Hello": "FastAPI"}
-
-
-@app.get("/items/{item_id}/{xyz}")
-def read_item(item_id: int, xyz: str, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q, "xyz": xyz}
+@app.get("/search", response_class=HTMLResponse)
+async def search(request: Request, q: str):
+    print(q)
+    return templates.TemplateResponse("./index.html",
+                                      {"request": request, "title": "콜렉터스 북북이", "keyword": q})
