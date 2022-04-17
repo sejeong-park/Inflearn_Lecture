@@ -3,4 +3,6 @@
 # 가상환경 정보
 venv/
 
+__pycache__/
+
 secrets.json

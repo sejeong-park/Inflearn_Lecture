@@ -4,7 +4,24 @@ import asyncio
 import ssl
 import certifi
 from config import get_secret
+import os
+import aiofiles
 # fetch 함수를 만들어 각각의 페이지에 대해 동시에 스크래핑 진행할 것
+
+
+async def img_downloader(session, img):
+    # print(img)
+    img_folder, img_name = os.path.split(img)
+    print(img_name)
+
+    os.makedirs("./images/", exist_ok=True)
+    # 이미지 url을 열었을 때, status가 양호(200)하다면, 파일을 쓴다.
+    async with session.get(img) as response:
+        if response.status == 200:
+            # byte
+            async with aiofiles.open(f"./images/{img_name}", mode="wb") as file:
+                # 인간이 볼 수 있는 형태로 다운로드(바이트 형태로 씀)
+                await file.write(await response.read())
 
 
 async def fetch(session, url, i):
@@ -18,8 +35,12 @@ async def fetch(session, url, i):
         result = await response.json()
         items = result["items"]
         images = [item['link'] for item in items]
+
         print(images)
         # print(result)
+
+        # 이미지 다운로더가 동시에 실행
+        await asyncio.gather(*[img_downloader(session, img_src) for img_src in images])
 
 
 async def main():
