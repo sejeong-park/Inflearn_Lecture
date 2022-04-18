@@ -5,3 +5,7 @@
 * 파이썬 멀티 스레딩과 멀티 프로세싱
 
 -> 운영체제의 "병렬성" 개념 정리하기
+*   drf_project : async 개념 이해하기
+*   project  : 강의 project 예제 따라하기
+
+### 2. Python 공부
